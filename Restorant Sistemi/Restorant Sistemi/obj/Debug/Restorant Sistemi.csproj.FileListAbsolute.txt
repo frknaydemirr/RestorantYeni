@@ -1,0 +1,10 @@
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\bin\Debug\Restorant Sistemi.exe.config
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\bin\Debug\Restorant Sistemi.exe
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\bin\Debug\Restorant Sistemi.pdb
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant Sistemi.csproj.AssemblyReference.cache
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant_Sistemi.Form1.resources
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant_Sistemi.Properties.Resources.resources
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant Sistemi.csproj.GenerateResource.cache
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant Sistemi.csproj.CoreCompileInputs.cache
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant Sistemi.exe
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\Restorant Sistemi\Restorant Sistemi\obj\Debug\Restorant Sistemi.pdb
