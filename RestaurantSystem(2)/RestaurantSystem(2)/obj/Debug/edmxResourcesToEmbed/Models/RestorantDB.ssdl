@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tbl_FirmaBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="InstagramURL" Type="nvarchar(max)" />
+    <Property Name="FacebookURL" Type="nvarchar(max)" />
+    <Property Name="TwitterURL" Type="nvarchar(max)" />
+    <Property Name="TelNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Logo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Eposta" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ResimURL" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Kullanici">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Menu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="YemekAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KategoriID" Type="int" Nullable="false" />
+    <Property Name="ResimURL" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fiyat" Type="int" Nullable="false" />
+    <Property Name="Acıklama" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_MenuKategori">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="KategoriAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UstKategoriID" Type="int" />
+    <Property Name="ResimURL" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Tbl_Menu_Tbl_MenuKategori">
+    <End Role="Tbl_MenuKategori" Type="Self.Tbl_MenuKategori" Multiplicity="1" />
+    <End Role="Tbl_Menu" Type="Self.Tbl_Menu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_MenuKategori">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_Menu">
+        <PropertyRef Name="KategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantSystemModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_FirmaBilgileri" EntityType="Self.Tbl_FirmaBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Kullanici" EntityType="Self.Tbl_Kullanici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Menu" EntityType="Self.Tbl_Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_MenuKategori" EntityType="Self.Tbl_MenuKategori" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Tbl_Menu_Tbl_MenuKategori" Association="Self.FK_Tbl_Menu_Tbl_MenuKategori">
+      <End Role="Tbl_MenuKategori" EntitySet="Tbl_MenuKategori" />
+      <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

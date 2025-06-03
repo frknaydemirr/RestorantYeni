@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&amp;family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Content/Template/css/bootstrap/css/bootstrap.min.css" />
+
+    <!-- Font Awesome Icons CSS -->
+    <link rel="stylesheet" href="/Content/Template/css/fontawesome/css/font-awesome.min.css" />
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="/Content/Template/js/owl-carousel/owl.carousel.min.css" />
+
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/Content/Template/style.css" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="/Content/Template/images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="/Content/Template/images/icons/favicon-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon-precomposed" href="/Content/Template/images/icons/favicon-180x180.png" />
+</head>
+<body>
+
+    @Html.Action("NavbarPartial", "Partial")
+
+    @RenderBody()
+
+    @Html.Action("FooterPartial", "Partial")
+
+
+    <!-- FOOTER -->
+    <!-- JS Scripts -->
+    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src='/Content/Template/js/jquery.js'></script>
+    <script src='/Content/Template/js/jquery-migrate.min.js'></script>
+    <script src='/Content/Template/css/bootstrap/js/popper.min.js'></script>
+    <script src='/Content/Template/css/bootstrap/js/bootstrap.min.js'></script>
+    <script src='/Content/Template/js/jquery.easing.min.js'></script>
+    <script src='/Content/Template/js/jquery.fitvids.js'></script>
+    <script src='/Content/Template/js/owl-carousel/owl.carousel.min.js'></script>
+    <script src='/Content/Template/js/jquery.magnific-popup.min.js'></script>
+    <script src='/Content/Template/js/init.js'></script>
+    <script src='/Content/Template/js/jquery.form.min.js'></script>
+    <script src='/Content/Template/js/contactform-home.js'></script>
+</body>
+</html>

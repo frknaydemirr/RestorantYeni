@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tbl_FirmaBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Adres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="InstagramURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FacebookURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TwitterURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TelNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Eposta" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ResimURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Kullanici">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Menu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="YemekAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KategoriID" Type="Int32" Nullable="false" />
+    <Property Name="ResimURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fiyat" Type="Int32" Nullable="false" />
+    <Property Name="Acıklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tbl_MenuKategori" Relationship="Self.FK_Tbl_Menu_Tbl_MenuKategori" FromRole="Tbl_Menu" ToRole="Tbl_MenuKategori" />
+  </EntityType>
+  <EntityType Name="Tbl_MenuKategori">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="KategoriAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UstKategoriID" Type="Int32" />
+    <Property Name="ResimURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tbl_Menu" Relationship="Self.FK_Tbl_Menu_Tbl_MenuKategori" FromRole="Tbl_MenuKategori" ToRole="Tbl_Menu" />
+  </EntityType>
+  <Association Name="FK_Tbl_Menu_Tbl_MenuKategori">
+    <End Role="Tbl_MenuKategori" Type="Self.Tbl_MenuKategori" Multiplicity="1" />
+    <End Role="Tbl_Menu" Type="Self.Tbl_Menu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_MenuKategori">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_Menu">
+        <PropertyRef Name="KategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tbl_FirmaBilgileri" EntityType="Self.Tbl_FirmaBilgileri" />
+    <EntitySet Name="Tbl_Kullanici" EntityType="Self.Tbl_Kullanici" />
+    <EntitySet Name="Tbl_Menu" EntityType="Self.Tbl_Menu" />
+    <EntitySet Name="Tbl_MenuKategori" EntityType="Self.Tbl_MenuKategori" />
+    <AssociationSet Name="FK_Tbl_Menu_Tbl_MenuKategori" Association="Self.FK_Tbl_Menu_Tbl_MenuKategori">
+      <End Role="Tbl_MenuKategori" EntitySet="Tbl_MenuKategori" />
+      <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

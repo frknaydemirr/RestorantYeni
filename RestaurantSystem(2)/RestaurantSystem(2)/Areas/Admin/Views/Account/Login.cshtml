@@ -1,0 +1,155 @@
+﻿@model RestaurantSystem_2_.Models.VT.Tbl_Kullanici
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Isparta İşitme - Yönetim Paneli</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/dist/css/adminlte.min2167.css?v=3.2.0">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .login-card-header {
+            background-color: transparent;
+            border-bottom: none;
+            padding: 2rem 1.5rem 1rem;
+        }
+
+        .login-card-body {
+            padding: 2rem;
+        }
+
+        .login-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            padding: 0.75rem;
+            height: auto;
+        }
+
+        .btn-login {
+            background-color: #007bff;
+            border: none;
+            padding: 0.75rem;
+            font-weight: 500;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+            .btn-login:hover {
+                background-color: #0056b3;
+            }
+
+        .login-links {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .input-group-text {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body class="hold-transition">
+    <div class="login-box">
+        <div class="card login-card">
+            <div class="card-header login-card-header">
+                <h1 class="login-title">Restorant <br>Yönetim Paneli</h1>
+            </div>
+            <div class="card-body login-card-body">
+                @using (Html.BeginForm("Login", "Account", new { area = "Admin" }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.KullaniciAdi, new { @class = "form-label" })
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.KullaniciAdi, new { @class = "form-control", placeholder = "Kullanıcı Adı" })
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.KullaniciAdi, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Sifre, new { @class = "form-label" })
+                        <div class="input-group">
+                            @Html.PasswordFor(m => m.Sifre, new { @class = "form-control", placeholder = "Şifre" })
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Sifre, "", new { @class = "text-danger" })
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-login">Giriş Yap</button>
+                    </div>
+                }
+
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/Areas/Admin/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/Areas/Admin/Content/dist/js/adminlte.min2167.js?v=3.2.0"></script>
+</body>
+</html>
