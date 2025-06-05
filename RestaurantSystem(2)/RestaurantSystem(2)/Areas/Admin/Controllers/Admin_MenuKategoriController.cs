@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,7 +13,7 @@ using RestaurantSystem_2_.Models.VT;
 namespace RestaurantSystem_2_.Areas.Admin.Controllers
 {
 
-
+    [Authorize]
     public class Admin_MenuKategoriController : Controller
     {
         private RestaurantSystemEntities db = new RestaurantSystemEntities();
@@ -41,8 +42,26 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
         // GET: Admin/Admin_MenuKategori/Create
         public ActionResult Create()
         {
+            var kategoriler = db.Tbl_MenuKategori
+                .Select(k => new SelectListItem
+                {
+                    Value = k.ID.ToString(),
+                    Text = k.KategoriAd
+                })
+                .ToList();
+
+            // En üste "Ana Kategori" seçeneğini ekle
+            kategoriler.Insert(0, new SelectListItem
+            {
+                Value = "0",
+                Text = "Ana Kategori (Üst Kategori Yok)"
+            });
+
+            ViewBag.KategoriList = new SelectList(kategoriler, "Value", "Text");
+
             return View();
         }
+
 
         // POST: Admin/Admin_MenuKategori/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -53,57 +72,92 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
         {
             try
             {
-                // 1. Model validasyonu
+                // Model validasyonu
                 if (!ModelState.IsValid)
                 {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    foreach (var error in errors)
+                    {
+                        Debug.WriteLine(error.ErrorMessage);
+                    }
                     return View(tbl_MenuKategori);
                 }
 
-                // 2. Resim yükleme zorunluluğu
+                // Resim kontrolü
                 if (ResimURL == null || ResimURL.ContentLength == 0)
                 {
-                    ViewBag.ErrorMessage = "Lütfen bir kategori resmi seçiniz";
+                    ModelState.AddModelError("ResimURL", "Lütfen bir kategori resmi seçiniz");
                     return View(tbl_MenuKategori);
                 }
 
-                // 3. Resim boyutu kontrolü (5MB)
+                // Resim boyutu kontrolü
                 if (ResimURL.ContentLength > 5 * 1024 * 1024)
                 {
-                    ViewBag.ErrorMessage = "Resim boyutu 5MB'tan büyük olamaz";
+                    ModelState.AddModelError("ResimURL", "Resim boyutu 5MB'tan büyük olamaz");
                     return View(tbl_MenuKategori);
                 }
 
-                // 4. Geçerli resim uzantıları kontrolü
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                // Uzantı kontrolü
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                 var extension = Path.GetExtension(ResimURL.FileName).ToLower();
                 if (!allowedExtensions.Contains(extension))
                 {
-                    ViewBag.ErrorMessage = "Sadece JPG, JPEG, PNG veya GIF formatında resimler yükleyebilirsiniz";
+                    ModelState.AddModelError("ResimURL", "Sadece JPG, JPEG, PNG, GIF veya WEBP formatında resimler yükleyebilirsiniz");
                     return View(tbl_MenuKategori);
                 }
 
-                // 5. Klasör işlemleri
+                // Klasör işlemleri
                 var uploadPath = Server.MapPath("~/Uploads/MenuKategori");
                 if (!Directory.Exists(uploadPath))
                 {
                     Directory.CreateDirectory(uploadPath);
                 }
 
-                // 6. Resmi kaydet
+                // Resmi kaydet
                 var fileName = Guid.NewGuid().ToString() + extension;
                 var filePath = Path.Combine(uploadPath, fileName);
                 ResimURL.SaveAs(filePath);
                 tbl_MenuKategori.ResimURL = "/Uploads/MenuKategori/" + fileName;
 
-                // 7. Veritabanına kaydet
-                db.Tbl_MenuKategori.Add(tbl_MenuKategori);
-                db.SaveChanges();
+                // Veritabanı işlemleri
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Null olabilecek alanları kontrol et
+                        if (tbl_MenuKategori.UstKategoriID == 0) // Dropdown'da 0 değeri "Ana Kategori" seçeneği
+                        {
+                            tbl_MenuKategori.UstKategoriID = null;
+                        }
 
-                return RedirectToAction("Index");
+                        db.Tbl_MenuKategori.Add(tbl_MenuKategori);
+                        db.SaveChanges();
+                        transaction.Commit();
+
+                        TempData["SuccessMessage"] = "Kategori başarıyla oluşturuldu!";
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        ModelState.AddModelError("", "Veritabanı hatası: " + ex.Message);
+                        // Resmi sil
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+                        return View(tbl_MenuKategori);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Kayıt oluşturulurken hata oluştu: " + ex.Message;
+                string errorDetails = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorDetails += " | Inner Exception: " + ex.InnerException.Message;
+                }
+                ModelState.AddModelError("", "Kayıt oluşturulurken hata oluştu: " + errorDetails);
                 return View(tbl_MenuKategori);
             }
         }
@@ -129,15 +183,14 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tbl_Menu tbl_Menu, HttpPostedFileBase ResimURL = null)
+        public ActionResult Edit(Tbl_MenuKategori tbl_MenuKategori, HttpPostedFileBase ResimURL = null)
         {
             try
             {
                 // 1. Model validasyonu
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
-                    return View(tbl_Menu);
+                    return View(tbl_MenuKategori);
                 }
 
                 // 2. Resim güncelleme işlemi
@@ -149,20 +202,18 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
 
                     if (!allowedExtensions.Contains(extension))
                     {
-                        ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
                         ViewBag.ErrorMessage = "Sadece JPG, JPEG, PNG, GIF veya WEBP formatında resimler yükleyebilirsiniz";
-                        return View(tbl_Menu);
+                        return View(tbl_MenuKategori);
                     }
 
                     if (ResimURL.ContentLength > 5 * 1024 * 1024) // 5MB
                     {
-                        ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
                         ViewBag.ErrorMessage = "Resim boyutu 5MB'tan büyük olamaz";
-                        return View(tbl_Menu);
+                        return View(tbl_MenuKategori);
                     }
 
                     // 4. Klasör kontrolü
-                    var uploadPath = Server.MapPath("~/Uploads/Menu");
+                    var uploadPath = Server.MapPath("~/Uploads/MenuKategori");
                     if (!Directory.Exists(uploadPath))
                         Directory.CreateDirectory(uploadPath);
 
@@ -172,38 +223,37 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                     ResimURL.SaveAs(filePath);
 
                     // 6. Eski resmi sil (opsiyonel)
-                    if (!string.IsNullOrEmpty(tbl_Menu.ResimURL))
+                    if (!string.IsNullOrEmpty(tbl_MenuKategori.ResimURL))
                     {
-                        var oldFilePath = Server.MapPath(tbl_Menu.ResimURL);
+                        var oldFilePath = Server.MapPath(tbl_MenuKategori.ResimURL);
                         if (System.IO.File.Exists(oldFilePath))
                         {
                             System.IO.File.Delete(oldFilePath);
                         }
                     }
 
-                    tbl_Menu.ResimURL = "/Uploads/Menu/" + fileName;
+                    tbl_MenuKategori.ResimURL = "/Uploads/MenuKategori/" + fileName;
                 }
                 else
                 {
                     // Resim değişmemişse mevcut URL'yi koru
-                    var existingEntity = db.Tbl_Menu.AsNoTracking().FirstOrDefault(m => m.ID == tbl_Menu.ID);
+                    var existingEntity = db.Tbl_MenuKategori.AsNoTracking().FirstOrDefault(m => m.ID == tbl_MenuKategori.ID);
                     if (existingEntity != null)
                     {
-                        tbl_Menu.ResimURL = existingEntity.ResimURL;
+                        tbl_MenuKategori.ResimURL = existingEntity.ResimURL;
                     }
                 }
 
                 // 7. Veritabanını güncelle
-                db.Entry(tbl_Menu).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(tbl_MenuKategori).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
                 ViewBag.ErrorMessage = "Güncelleme sırasında hata oluştu: " + ex.Message;
-                return View(tbl_Menu);
+                return View(tbl_MenuKategori);
             }
         }
 

@@ -7,8 +7,10 @@ namespace RestaurantSystem_2_.Models.ViewModel
 {
     public class IndexViewModel
     {
-        public List<Tbl_FirmaBilgileri> Tbl_FirmaBilgiler { get; set; }
+        public Tbl_FirmaBilgileri Tbl_FirmaBilgiler { get; set; }
         public List<Tbl_Menu> Tbl_Menu { get; set; }
+
+        public List<Tbl_MenuKategori> Tbl_MenuKategori { get; set; }
 
     }
 }

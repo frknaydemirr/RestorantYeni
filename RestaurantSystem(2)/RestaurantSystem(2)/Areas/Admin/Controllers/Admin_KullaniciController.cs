@@ -10,7 +10,7 @@ using RestaurantSystem_2_.Models.VT;
 
 namespace RestaurantSystem_2_.Areas.Admin.Controllers
 {
-
+    [Authorize]
     public class Admin_KullaniciController : Controller
     {
         private RestaurantSystemEntities db = new RestaurantSystemEntities();
@@ -51,13 +51,39 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Tbl_Kullanici.Add(tbl_Kullanici);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                // Şifreyi hashle
+                tbl_Kullanici.Sifre = HashPassword(tbl_Kullanici.Sifre);
+
+                try
+                {
+                    db.Tbl_Kullanici.Add(tbl_Kullanici);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    foreach (var eve in ex.EntityValidationErrors)
+                    {
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            // Hata mesajını Output'a yaz
+                            System.Diagnostics.Debug.WriteLine($"Property: {ve.PropertyName}, Error: {ve.ErrorMessage}");
+
+                            // Hata mesajını kullanıcıya göster
+                            ModelState.AddModelError(ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+
+                    // throw; // Artık yeniden fırlatmıyoruz, çünkü hata gösterilecek
+                }
+
             }
 
+            // ModelState geçerli değilse formu geri döndür
             return View(tbl_Kullanici);
         }
+
+
 
         // GET: Admin/Admin_Kullanici/Edit/5
         public ActionResult Edit(int? id)
@@ -139,7 +165,15 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
             }
         }
 
-
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var bytes = System.Text.Encoding.UTF8.GetBytes(password);
+                var hashBytes = sha256.ComputeHash(bytes);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

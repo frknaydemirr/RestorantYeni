@@ -129,54 +129,55 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-                        <div class="row g-3">
-                            <!-- Kategori Adı -->
-                            <div class="col-md-6">
-                                <div class="form-floating mb-4">
-                                    @Html.EditorFor(model => model.KategoriAd, new { htmlAttributes = new { @class = "form-control", placeholder = " ", required = "required" } })
-                                    @Html.LabelFor(model => model.KategoriAd)
-                                    @Html.ValidationMessageFor(model => model.KategoriAd, "", new { @class = "text-danger small" })
-                                </div>
+                    <div class="row g-3">
+                        <!-- Kategori Adı -->
+                        <div class="col-md-6">
+                            <div class="form-floating mb-4">
+                                @Html.EditorFor(model => model.KategoriAd, new { htmlAttributes = new { @class = "form-control", placeholder = " ", required = "required" } })
+                                @Html.LabelFor(model => model.KategoriAd)
+                                @Html.ValidationMessageFor(model => model.KategoriAd, "", new { @class = "text-danger small" })
                             </div>
+                        </div>
 
-                            <!-- Üst Kategori Seçimi -->
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    @Html.LabelFor(model => model.UstKategoriID, "Üst Kategori", htmlAttributes: new { @class = "form-label fw-bold mb-2" })
-                                    @{
-                                        var kategoriList = ViewBag.KategoriList as SelectList;
-                                        var selectList = kategoriList != null ? kategoriList : new SelectList(new List<SelectListItem>());
-                                    }
-                                    @Html.DropDownListFor(model => model.UstKategoriID, selectList, "Ana Kategori (Üst Kategori Yok)", new { @class = "form-select" })
-                                    @Html.ValidationMessageFor(model => model.UstKategoriID, "", new { @class = "text-danger small" })
-                                </div>
+                        <!-- Üst Kategori Seçimi -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                @Html.LabelFor(model => model.UstKategoriID, "Üst Kategori", htmlAttributes: new { @class = "form-label fw-bold mb-2" })
+                                @{
+                                    var kategoriList = ViewBag.KategoriList as SelectList;
+                                    var selectList = kategoriList ?? new SelectList(new List<SelectListItem>());
+                                }
+                                @Html.DropDownListFor(model => model.UstKategoriID, selectList, new { @class = "form-select" })
+                                @Html.ValidationMessageFor(model => model.UstKategoriID, "", new { @class = "text-danger small" })
                             </div>
+                        </div>
 
-                            <!-- Resim Yükleme -->
-                            <div class="col-12">
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold mb-2">Kategori Resmi</label>
 
-                                    <!-- Resim Önizleme -->
-                                    <div class="image-container text-center mb-3">
-                                        <img id="imagePreview" src="#" alt="Resim Önizleme" />
-                                    </div>
+                        <!-- Resim Yükleme -->
+                        <div class="col-12">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold mb-2">Kategori Resmi</label>
 
-                                    <!-- Dosya Yükleme -->
-                                    <div class="file-upload-wrapper">
-                                        <label for="ResimURL" class="file-upload-label">
-                                            <div class="file-upload-icon">
-                                                <i class="fas fa-cloud-upload-alt fa-2x mb-3"></i>
-                                            </div>
-                                            <div class="mb-2">Resim eklemek için tıklayın</div>
-                                            <span class="badge bg-primary px-3 py-2">Resim Seç (Max 2MB)</span>
-                                            <div class="form-text text-muted mt-2">Önerilen boyut: 800x600 px</div>
-                                        </label>
-                                        <input type="file" name="ResimURL" id="ResimURL" class="d-none" accept="image/*" />
-                                    </div>
+                                <!-- Resim Önizleme -->
+                                <div class="image-container text-center mb-3">
+                                    <img id="imagePreview" src="#" alt="Resim Önizleme" />
+                                </div>
+
+                                <!-- Dosya Yükleme -->
+                                <div class="file-upload-wrapper">
+                                    <label for="ResimURL" class="file-upload-label">
+                                        <div class="file-upload-icon">
+                                            <i class="fas fa-cloud-upload-alt fa-2x mb-3"></i>
+                                        </div>
+                                        <div class="mb-2">Resim eklemek için tıklayın</div>
+                                        <span class="badge bg-primary px-3 py-2">Resim Seç (Max 2MB)</span>
+                                        <div class="form-text text-muted mt-2">Önerilen boyut: 800x600 px</div>
+                                    </label>
+                                    <input type="file" name="ResimURL" id="ResimURL" class="d-none" accept="image/*" />
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                         <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top">
                             @Html.ActionLink("İptal", "Index", null, new { @class = "btn btn-outline-secondary px-4" })

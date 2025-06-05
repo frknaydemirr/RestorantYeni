@@ -24,68 +24,71 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-                <div class="row g-3">
-                    <!-- Kullanıcı Adı -->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.KullaniciAdi, htmlAttributes: new { @class = "form-label fw-bold" })
-                            @Html.EditorFor(model => model.KullaniciAdi, new
+            <div class="row g-3">
+                <!-- Kullanıcı Adı -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.KullaniciAdi, htmlAttributes: new { @class = "form-label fw-bold" })
+                        @Html.EditorFor(model => model.KullaniciAdi, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           placeholder = "Kullanıcı adı giriniz",
+                           required = "required",
+                           autocomplete = "username"
+                       }
+                   })
+
+                        @Html.ValidationMessageFor(model => model.KullaniciAdi, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <!-- Şifre -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Sifre, htmlAttributes: new { @class = "form-label fw-bold" })
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Sifre, new
                        {
                            htmlAttributes = new
                            {
                                @class = "form-control",
-                               placeholder = "Kullanıcı adı giriniz",
+                               placeholder = "Şifre giriniz",
+                               type = "password",
                                required = "required",
-                               autocomplete = "username"
+                               autocomplete = "new-password",
+                               id = "passwordField"
                            }
                        })
-                            
-                            @Html.ValidationMessageFor(model => model.KullaniciAdi, "", new { @class = "text-danger small" })
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                    </div>
-
-                    <!-- Şifre -->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            @Html.LabelFor(model => model.Sifre, htmlAttributes: new { @class = "form-label fw-bold" })
-                            <div class="input-group">
-                                @Html.EditorFor(model => model.Sifre, new
-                           {
-                               htmlAttributes = new
-                               {
-                                   @class = "form-control",
-                                   placeholder = "Şifre giriniz",
-                                   type = "password",
-                                   required = "required",
-                                   autocomplete = "new-password",
-                                   id = "passwordField"
-                               }
-                           })
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger small" })
-                            <div class="form-text">Şifre en az 8 karakter olmalıdır</div>
-                        </div>
-                    </div>
-
-                    <!-- Şifre Tekrar -->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Şifre Tekrar</label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="confirmPassword"
-                                       placeholder="Şifreyi tekrar giriniz" required
-                                       autocomplete="new-password">
-                                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <div id="passwordMatchError" class="text-danger small" style="display:none;">Şifreler uyuşmuyor</div>
-                        </div>
+                        @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger small" })
+                        <div class="form-text">Şifre en az 8 karakter olmalıdır</div>
                     </div>
                 </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.KullaniciAdi, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
+
+                <!-- Şifre Tekrar -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Şifre Tekrar</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   placeholder="Şifreyi tekrar giriniz" required
+                                   autocomplete="new-password">
+                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div id="passwordMatchError" class="text-danger small" style="display:none;">Şifreler uyuşmuyor</div>
+                    </div>
+                </div>
+            </div>
 
                 <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top">
                     @Html.ActionLink("İptal", "Index", null, new { @class = "btn btn-outline-secondary px-4" })

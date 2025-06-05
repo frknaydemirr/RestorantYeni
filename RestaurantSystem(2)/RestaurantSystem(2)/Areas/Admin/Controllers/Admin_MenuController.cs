@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,7 +12,7 @@ using RestaurantSystem_2_.Models.VT;
 
 namespace RestaurantSystem_2_.Areas.Admin.Controllers
 {
-
+    [Authorize]
     public class Admin_MenuController : Controller
     {
         private RestaurantSystemEntities db = new RestaurantSystemEntities();
@@ -45,11 +46,10 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/Admin_Menu/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] // HTML içeriğine izin vermek için
         public ActionResult Create(Tbl_Menu tbl_Menu, HttpPostedFileBase ResimURL = null)
         {
             try
@@ -58,6 +58,7 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                 if (!ModelState.IsValid)
                 {
                     ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
+                    ViewBag.ErrorMessage = "Form verileri geçersiz";
                     return View(tbl_Menu);
                 }
 
@@ -69,21 +70,22 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                     return View(tbl_Menu);
                 }
 
-                // 3. Resim boyutu kontrolü (5MB)
-                if (ResimURL.ContentLength > 5 * 1024 * 1024)
-                {
-                    ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
-                    ViewBag.ErrorMessage = "Resim boyutu 5MB'tan büyük olamaz";
-                    return View(tbl_Menu);
-                }
-
-                // 4. Geçerli resim uzantıları kontrolü
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" }; // webp eklendi
+                // 3. Resim format kontrolü
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                 var extension = Path.GetExtension(ResimURL.FileName).ToLower();
+
                 if (!allowedExtensions.Contains(extension))
                 {
                     ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
                     ViewBag.ErrorMessage = "Sadece JPG, JPEG, PNG, GIF veya WEBP formatında resimler yükleyebilirsiniz";
+                    return View(tbl_Menu);
+                }
+
+                // 4. Resim boyutu kontrolü (5MB)
+                if (ResimURL.ContentLength > 5 * 1024 * 1024)
+                {
+                    ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
+                    ViewBag.ErrorMessage = "Resim boyutu 5MB'tan büyük olamaz";
                     return View(tbl_Menu);
                 }
 
@@ -100,19 +102,39 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                 ResimURL.SaveAs(filePath);
                 tbl_Menu.ResimURL = "/Uploads/Menu/" + fileName;
 
-                // 7. Veritabanına kaydet
+                // 7. Veritabanına kaydet (transaction olmadan)
                 db.Tbl_Menu.Add(tbl_Menu);
                 db.SaveChanges();
 
+                TempData["SuccessMessage"] = "Yemek başarıyla oluşturuldu!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
+                // Inner exception detaylarını al
+                string errorMessage = "Kayıt oluşturulurken hata oluştu: " + ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorMessage += " | Inner Exception: " + ex.InnerException.Message;
+                }
+
                 ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
-                ViewBag.ErrorMessage = "Kayıt oluşturulurken hata oluştu: " + ex.Message;
+                ViewBag.ErrorMessage = errorMessage;
                 return View(tbl_Menu);
             }
         }
+
+
+
+
+
+
+
+
+        // POST: Admin/Admin_Menu/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
 
         // GET: Admin/Admin_Menu/Edit/5
         public ActionResult Edit(int? id)
@@ -135,7 +157,7 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tbl_Menu tbl_Menu, HttpPostedFileBase ResimURL = null)
+        public ActionResult Edit(Tbl_Menu tbl_Menu, HttpPostedFileBase yemekResmi = null)
         {
             try
             {
@@ -147,11 +169,11 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                 }
 
                 // 2. Resim güncelleme işlemi
-                if (ResimURL != null && ResimURL.ContentLength > 0)
+                if (yemekResmi != null && yemekResmi.ContentLength > 0)
                 {
                     // 3. Resim format ve boyut kontrolü
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-                    var extension = Path.GetExtension(ResimURL.FileName).ToLower();
+                    var extension = Path.GetExtension(yemekResmi.FileName).ToLower();
 
                     if (!allowedExtensions.Contains(extension))
                     {
@@ -160,7 +182,7 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                         return View(tbl_Menu);
                     }
 
-                    if (ResimURL.ContentLength > 5 * 1024 * 1024) // 5MB
+                    if (yemekResmi.ContentLength > 5 * 1024 * 1024) // 5MB
                     {
                         ViewBag.KategoriID = new SelectList(db.Tbl_MenuKategori, "ID", "KategoriAd", tbl_Menu.KategoriID);
                         ViewBag.ErrorMessage = "Resim boyutu 5MB'tan büyük olamaz";
@@ -175,7 +197,7 @@ namespace RestaurantSystem_2_.Areas.Admin.Controllers
                     // 5. Yeni resmi kaydet
                     var fileName = Guid.NewGuid().ToString() + extension;
                     var filePath = Path.Combine(uploadPath, fileName);
-                    ResimURL.SaveAs(filePath);
+                    yemekResmi.SaveAs(filePath);
 
                     // 6. Eski resmi sil (opsiyonel)
                     if (!string.IsNullOrEmpty(tbl_Menu.ResimURL))

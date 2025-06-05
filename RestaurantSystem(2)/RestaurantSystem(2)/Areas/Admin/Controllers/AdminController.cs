@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace RestaurantSystem_2_.Areas.Admin.Controllers
 {
 
-
+    [Authorize]
     public class AdminController : Controller
     {
         // GET: Admin/Admin

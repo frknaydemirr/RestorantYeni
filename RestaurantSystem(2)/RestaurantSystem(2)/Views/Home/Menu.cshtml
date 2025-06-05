@@ -14,219 +14,90 @@
 <!-- /TOP IMAGE -->
 <!-- WRAP CONTENT -->
 <div id="wrap-content" class="page-content custom-page-template">
+    @model RestaurantSystem_2_.Models.ViewModel.IndexViewModel
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="page-holder custom-page-template">
-                    @*<div class="image-container menu5-img1" style="margin-bottom:20px;">
-            <div class="smalltitle white no-margin">1</div>
-            <h2 class="white no-margin">İçecekler</h2>
-        </div>*@
-                    <h2 class="menu-category">İçecekler</h2>
-                    <div class="row">
+                    @if (Model == null)
+                    {
+                        <div class="alert alert-danger">Model yüklenemedi!</div>
+                    }
+                    else if (Model.Tbl_MenuKategori == null || !Model.Tbl_MenuKategori.Any())
+                    {
+                        <div class="alert alert-warning">
+                            Menü kategorileri bulunamadı!
+                            <br />Kategori sayısı: @(Model.Tbl_MenuKategori?.Count ?? 0)
+                        </div>
+                    }
+                    else
+                    {
+                        var anaKategoriler = Model.Tbl_MenuKategori
+                            .Where(k => k.UstKategoriID == null)
+                            .OrderBy(k => k.ID)
+                            .ToList();
 
-                        <div class="col-md-6 margin-b54">
-                            <div class="image-container menu5-img1">
-                                <div class="smalltitle white no-margin">1</div>
-                                <h2 class="white no-margin">Soğuk İçecekler</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols">
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                        <div class="col-md-6 margin-b54">
-                            <div class="image-container menu5-img2">
-                                <div class="smalltitle white no-margin">2</div>
-                                <h2 class="white no-margin">Sıcak İçecekler</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols">
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                    </div>
-                    <!-- /row -->
-                    @*<div class="image-container menu5-img1" style="margin-bottom:20px;">
-            <div class="smalltitle white no-margin">1</div>
-            <h2 class="white no-margin">Tatlılar</h2>
-        </div>*@
-                    <h2 class="menu-category">Tatlılar</h2>
-                    <div class="row">
+                        foreach (var anaKategori in anaKategoriler)
+                        {
+                            <h2 class="menu-category">@anaKategori.KategoriAd</h2>
 
-                        <div class="col-md-6 mobile-margin-b54">
-                            <div class="image-container menu5-img3">
-                                <div class="smalltitle white no-margin">3</div>
-                                <h2 class="white no-margin">Sütlü Tatlılar</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols">
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="image-container menu5-img4">
-                                <div class="smalltitle white no-margin">4</div>
-                                <h2 class="white no-margin">Şerbetli Tatlılar</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols">
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class=" row">
-                                        <div class="menu-img"><img src="/Content/Template/images/menu/food-1.jpg" class="img-fluid" alt="" width="100" height="200"></div>
-                                        <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                    </div>
+                            var altKategoriler = Model.Tbl_MenuKategori
+                                .Where(k => k.UstKategoriID == anaKategori.ID)
+                                .OrderBy(k => k.ID)
+                                .ToList();
 
-                    <!-- /row -->
+                            if (altKategoriler.Any())
+                            {
+                                <div class="row">
+                                    @foreach (var altKategori in altKategoriler)
+                                    {
+                                        <div class="col-md-6 margin-b54">
+                                            <div class="image-container @("menu5-img" + (altKategoriler.IndexOf(altKategori) % 2 + 1))">
+                                                <div class="smalltitle white no-margin">@(altKategoriler.IndexOf(altKategori) + 1)</div>
+                                                <h2 class="white no-margin">@altKategori.KategoriAd</h2>
+                                            </div>
+
+                                            <ul class="food-menu menu-1cols">
+                                                @{
+                                                    var yemekler = Model.Tbl_Menu?
+                                                        .Where(y => y.KategoriID == altKategori.ID)
+                                                        .OrderBy(y => y.ID)
+                                                        .ToList();
+
+                                                    if (yemekler != null && yemekler.Any())
+                                                    {
+                                                        foreach (var yemek in yemekler)
+                                                        {
+                                                            <li>
+                                                                <h4>
+                                                                    <span class="menu-title">@yemek.YemekAd</span>
+                                                                    <span class="menu-price">@yemek.Fiyat.ToString("C")</span>
+                                                                </h4>
+                                                                <div class="row">
+                                                                    @if (!string.IsNullOrEmpty(yemek.ResimURL))
+                                                                    {
+                                                                        <div class="menu-img">
+                                                                            <img src="@yemek.ResimURL" class="img-fluid" alt="@yemek.YemekAd" width="100" height="200">
+                                                                        </div>
+                                                                    }
+                                                                    <div class="menu-text">@yemek.Acıklama</div>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    }
                 </div>
-                <!-- /custom-page-template -->
             </div>
-            <!-- /col-md-12 -->
         </div>
-        <!-- /row -->
     </div>
-    <!-- /container -->
 </div>
+    <!-- /container -->
+
 

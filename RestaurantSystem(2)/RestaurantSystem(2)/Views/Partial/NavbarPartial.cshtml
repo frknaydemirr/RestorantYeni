@@ -1,4 +1,4 @@
-﻿
+﻿@model RestaurantSystem_2_.Models.ViewModel.NavbarViewModel
 
 <!DOCTYPE html>
 
@@ -66,14 +66,6 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="/Menu">Vejetaryen Ürünler</a>
-                            <ul class="sub-menu">
-                                <li><a href="sebzeli-kebap.html">Sebzeli Kebap</a></li>
-                                <li><a href="etsiz-burger.html">Etsiz Burger</a></li>
-                                <li><a href="kinoali-tabak.html">Kinoalı Tabak</a></li>
-                            </ul>
-                        </li>
 
                         <li>
                             <a href="/Menu">Burgerler</a>
@@ -138,11 +130,10 @@
         <div class="menu-contact">
 
             <ul class="mobile-contact">
-                <li class="mobile-address">
-                    58 Ralph Ave<br />
-                    New York, New York 1111
-                </li>
-                <li class="mobile-phone">+1 800 000 111</li>
+                @*<li class="mobile-address">
+                    Model.Tbl_FirmaBilgiler.Adres
+                </li>*@
+                <li class="mobile-phone">@Model.Tbl_FirmaBilgiler.TelNo</li>
                 <li class="mobile-email"><a href="https://matchthemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8be8e4e5ffeae8ffcbeef3eae6fbe7eea5e8e4e6">[email&#160;protected]</a></li>
             </ul>
             <ul class="social-media">
@@ -165,7 +156,7 @@
         </div>
         <!-- /nav-button-holder-->
         <!-- LOGO -->
-        <div class="logo logo-1"><a href="index.html"><img class="img-fluid" src="images/caverta-logo.png" alt="Caverta" /></a></div>
+        <div class="logo logo-1"><a href="index.html"><img class="img-fluid" src="@Model.Tbl_FirmaBilgiler.Logo" alt="Caverta" /></a></div>
         <!-- MENU -->
         <nav class="nav-holder nav-holder-1">
             <ul class="menu-nav menu-nav-1">
@@ -218,14 +209,7 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="/Menu">Vejetaryen Ürünler</a>
-                            <ul class="sub-menu">
-                                <li><a href="sebzeli-kebap.html">Sebzeli Kebap</a></li>
-                                <li><a href="etsiz-burger.html">Etsiz Burger</a></li>
-                                <li><a href="kinoali-tabak.html">Kinoalı Tabak</a></li>
-                            </ul>
-                        </li>
+
 
                         <li>
                             <a href="/Menu">Burgerler</a>
@@ -288,10 +272,10 @@
         <!-- /MENU -->
         <div class="social-btn-top1">
             <ul class="social-media social-media1">
-                <li><a class="social-facebook" href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a class="social-twitter" href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                <li><a class="social-tripadvisor" href="#" target="_blank"><i class="fab fa-tripadvisor"></i></a></li>
-                <li><a class="social-instagram" href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li><a class="social-facebook" href="@Model.Tbl_FirmaBilgiler.FacebookURL" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a class="social-twitter" href="@Model.Tbl_FirmaBilgiler.TwitterURL"  target="_blank"><i class="fab fa-twitter"></i></a></li>
+              
+                <li><a class="social-instagram" href="@Model.Tbl_FirmaBilgiler.InstagramURL"  target="_blank"><i class="fab fa-instagram"></i></a></li>
             </ul>
 
         </div>

@@ -108,6 +108,17 @@
             background-color: rgba(37, 117, 252, 0.05);
         }
 
+    /* CKEditor Stilleri */
+    .editor-container {
+        margin-top: 15px;
+    }
+
+    .ck-editor__editable {
+        min-height: 200px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
     /* Responsive Düzenlemeler */
     @@media (max-width: 768px) {
         .card-header {
@@ -122,7 +133,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title mb-0"><i class="fas fa-utensils me-2"></i>MENÜ KATEGORİSİ DÜZENLE</h3>
+                    <h3 class="card-title mb-0"><i class="fas fa-list-alt me-2"></i>MENÜ KATEGORİSİ DÜZENLE</h3>
                     <div>
                         @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-sm btn-outline-light" })
                     </div>
@@ -162,8 +173,10 @@
                                 </div>
                             </div>
 
+
+
                             <!-- Resim Yükleme -->
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <div class="mb-4">
                                     <label class="form-label fw-bold mb-2">Kategori Resmi</label>
 
@@ -178,7 +191,7 @@
 
                                     <!-- Dosya Yükleme -->
                                     <div class="file-upload-wrapper">
-                                        <label for="kategoriResmi" class="file-upload-label">
+                                        <label for="ResimURL" class="file-upload-label">
                                             <div class="file-upload-icon">
                                                 <i class="fas fa-image fa-2x mb-3"></i>
                                             </div>
@@ -186,7 +199,7 @@
                                             <span class="badge bg-primary px-3 py-2">Resim Seç (Max 2MB)</span>
                                             <div class="form-text text-muted mt-2">Önerilen boyut: 800x600 px</div>
                                         </label>
-                                        <input type="file" name="kategoriResmi" id="kategoriResmi" class="d-none" accept="image/*" />
+                                        <input type="file" name="ResimURL" id="ResimURL" class="d-none" accept="image/*" />
                                         @Html.HiddenFor(model => model.ResimURL)
                                     </div>
                                 </div>
@@ -212,10 +225,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- TinyMCE -->
 <script src="/Areas/Admin/Content/js/tinymce/tinymce.min.js"></script>
+
 <script>
     // Resim önizleme fonksiyonu
-    document.getElementById('kategoriResmi').addEventListener('change', function (event) {
+    document.getElementById('ResimURL').addEventListener('change', function (event) {
         const file = event.target.files[0];
         const preview = document.getElementById('imagePreview');
         const currentImage = document.getElementById('currentImage');
@@ -240,7 +255,7 @@
     });
 
     // Form gönderim kontrolü
-    document.getElementById('menuKategoriForm').addEventListener('submit', function(e) {
+    document.getElementById('menuKategoriForm').addEventListener('submit', function (e) {
         if (!this.checkValidity()) {
             e.preventDefault();
             e.stopPropagation();
@@ -254,5 +269,27 @@
         }
 
         this.classList.add('was-validated');
+    });
+
+    // TinyMCE Editor Initialization (Kullanılmıyor ama yapıyı korumak için bırakıldı)
+    tinymce.init({
+        selector: '#editor',
+        menubar: false,
+        plugins: 'lists link image charmap preview code fullscreen',
+        toolbar: 'undo redo | formatselect | bold italic underline strikethrough | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | link image charmap | \
+                  preview fullscreen code | removeformat',
+        height: 200,
+        image_caption: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+        branding: false,
+        contextmenu: 'link image inserttable | cell row column deletetable',
+        license_key: 'gpl',
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
     });
 </script>

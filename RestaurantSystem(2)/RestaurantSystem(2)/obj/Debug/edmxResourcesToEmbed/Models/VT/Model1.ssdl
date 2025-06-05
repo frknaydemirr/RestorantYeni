@@ -14,8 +14,8 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="Adres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar(max)" Nullable="false" />
     <Property Name="InstagramURL" Type="nvarchar(max)" />
     <Property Name="FacebookURL" Type="nvarchar(max)" />
     <Property Name="TwitterURL" Type="nvarchar(max)" />
@@ -28,15 +28,15 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Sifre" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Tbl_Menu">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="YemekAd" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="KategoriID" Type="int" Nullable="false" />
     <Property Name="ResimURL" Type="nvarchar(max)" Nullable="false" />
@@ -47,7 +47,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="KategoriAd" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="UstKategoriID" Type="int" />
     <Property Name="ResimURL" Type="nvarchar(max)" Nullable="false" />

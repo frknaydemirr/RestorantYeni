@@ -1,4 +1,4 @@
-﻿
+﻿@model RestaurantSystem_2_.Models.ViewModel.IndexViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,169 +16,144 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="page-holder custom-page-template">
-                    <div class="row margin-b54">
-                        <div class="col-md-6">
-                            <div class="alignc">
-                                <div class="smalltitle margin-b16">1</div>
-                                <h2>Starters</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols mobile-margin-b54">
-                                <li>
-                                    <h4><span class="menu-title">Tomato Bruschetta</span><span class="menu-price">$4.00</span></h4>
-                                    <div class="menu-text">Tomatoes, Olive Oil, Cheese</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Avocado &amp; Mango Salsa</span><span class="menu-price">$5.00</span></h4>
-                                    <div class="menu-text">Avocado, Mango, Tomatoes</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Marinated Grilled Shrimp</span><span class="menu-price">$7.00</span></h4>
-                                    <div class="menu-text">Fresh Shrimp, Oive Oil, Tomato Sauce</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Baked Potato Skins</span><span class="menu-price">$9.00</span></h4>
-                                    <div class="menu-text">Potatoes, Oil, Garlic</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Maitake Mushroom</span><span class="menu-price">$10.00</span></h4>
-                                    <div class="menu-text">Whipped Miso, Yaki Sauce, Sesame</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Lobster Picante</span><span class="menu-price">$12.00</span></h4>
-                                    <div class="menu-text">Grilled Corn Elote, Queso Cotija, Chili</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Jambon Iberico</span><span class="menu-price">$10.00</span></h4>
-                                    <div class="menu-text">Smoked Tomato Aioli, Idizabal Cheese, Spiced Pine Nuts</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                        <div class="col-md-6 alignc">
-                            <img src="/Content/Template/images/menu/menu-1col-1.jpg" class="img-fluid" alt="Starters" />
-                        </div>
-                        <!-- /col-md-6 -->
-                    </div>
-                    <!-- /row -->
-                    <div class="row margin-b54">
-                        <div class="col-md-6 alignc">
-                            <img src="/Content/Template/images/menu/menu-1col-2.jpg" class="img-fluid mobile-margin-b54" alt="Main Course" />
-                        </div>
-                        <!-- /col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="alignc">
-                                <div class="smalltitle margin-b16">2</div>
-                                <h2>Main Course</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols">
-                                <li>
-                                    <h4><span class="menu-title">Braised Pork Chops</span><span class="menu-price">$21.00</span></h4>
-                                    <div class="menu-text">4 bone-in pork chops, olive oil, garlic, onion</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Coconut Fried Chicken </span><span class="menu-price">$19.00</span></h4>
-                                    <div class="menu-text">8 chicken pieces, coconut milk, oil</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Chicken with Garlic &amp; Tomatoes </span><span class="menu-price">$15.00</span></h4>
-                                    <div class="menu-text">Chicken, cherry tomatoes, olive oil, dry white wine</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Prime Rib</span><span class="menu-price">$25.00</span></h4>
-                                    <div class="menu-text">Rib, rosemary, black pepper, red wine</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Sriracha Beef Skewers</span><span class="menu-price">$18.00</span></h4>
-                                    <div class="menu-text">Beef, garlic, sesame oil, vinegar</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Crispy Tuna Fregola</span><span class="menu-price">$22.00</span></h4>
-                                    <div class="menu-text">Fregola, Baby Arugula Roasted, Green Olives, Pine Nuts</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Charred Lamb Ribs</span><span class="menu-price">$20.00</span></h4>
-                                    <div class="menu-text">Za’atar, Turkish BBQ, Sesame Yoghurt</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                    </div>
-                    <!-- /row -->
-                    <div class="row margin-b54">
-                        <div class="col-md-6">
-                            <div class="alignc">
-                                <div class="smalltitle margin-b16">3</div>
-                                <h2>Soups</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols mobile-margin-b54">
-                                <li>
-                                    <h4><span class="menu-title">Terrific Turkey Chili</span><span class="menu-price">$10.00</span></h4>
-                                    <div class="menu-text">Turkey, oregano, tomato paste, peppers</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Cream of Asparagus Soup</span><span class="menu-price">$12.00</span></h4>
-                                    <div class="menu-text">Asparagus, potato, celery, onion, pepper</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Creamy Chicken &amp; Wild Rice Soup</span><span class="menu-price">$9.00</span></h4>
-                                    <div class="menu-text">Cooked chicken, salt, butter, heavy cream</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Italian Sausage Tortellini</span><span class="menu-price">$8.00</span></h4>
-                                    <div class="menu-text">Cheese tortellini, sausage, garlic, carrots, zucchini</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Italian Sausage Soup</span><span class="menu-price">$10.00</span></h4>
-                                    <div class="menu-text">Italian sausage, garlic, carrots, zucchini</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Ham and Potato Soup</span><span class="menu-price">$11.00</span></h4>
-                                    <div class="menu-text">Potatoes, ham, celery, onion, milk</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                        <div class="col-md-6 alignc">
-                            <img src="/Content/Template/images/menu/menu-1col-3.jpg" class="img-fluid" alt="Soups" />
-                        </div>
-                        <!-- /col-md-6 -->
-                    </div>
-                    <!-- /row -->
-                    <div class="row">
-                        <div class="col-md-6 alignc">
-                            <img src="/Content/Template/images/menu/menu-1col-4.jpg" class="img-fluid mobile-margin-b54" alt="Desserts" />
-                        </div>
-                        <!-- /col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="alignc">
-                                <div class="smalltitle margin-b16">4</div>
-                                <h2>Desserts</h2>
-                            </div>
-                            <ul class="food-menu menu-1cols">
-                                <li>
-                                    <h4><span class="menu-title">Summer Berry and Coconut Tart</span><span class="menu-price">$10.00</span></h4>
-                                    <div class="menu-text">Raspberries, blackberries, blueberries, graham cracker</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Double Chocolate Cupcakes</span><span class="menu-price">$12.00</span></h4>
-                                    <div class="menu-text">Chocolate, eggs, vanilla, milk</div>
-                                </li>
-                                <li>
-                                    <h4><span class="menu-title">Pumpkin Cookies Cream Cheese</span><span class="menu-price">$10.00</span></h4>
-                                    <div class="menu-text">Pumpkin, sugar, butter, eggs</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /col-md-6 -->
-                    </div>
-                    <!-- /row -->
+                    @{
+                        int index = 0; // sıra sayacı
+                    }
+
+                    @foreach (var anaKategori in Model.Tbl_MenuKategori.Where(k => k.UstKategoriID == null).OrderBy(k => k.ID))
+                    {
+                        bool resimSagda = index % 2 == 0; // Çiftse resim sağda, tekse solda
+
+                        <div class="row margin-b54">
+                            @if (resimSagda)
+                            {
+                                <!-- Açıklama sol, resim sağ -->
+                                <div class="col-md-6">
+                                    @* Açıklamalar *@
+                                    <div class="alignc">
+                                        <div class="smalltitle margin-b16">1</div>
+                                        <h2>@anaKategori.KategoriAd</h2>
+                                    </div>
+
+                                    @{
+                                        var altKategoriler = Model.Tbl_MenuKategori.Where(k => k.UstKategoriID == anaKategori.ID).OrderBy(k => k.ID).ToList();
+                                    }
+
+                                    @foreach (var altKategori in altKategoriler)
+                                    {
+                                        <h3 class="margin-t30">@altKategori.KategoriAd</h3>
+                                        <ul class="food-menu menu-1cols mobile-margin-b54">
+                                            @{
+                                                var yemekler = Model.Tbl_Menu.Where(y => y.KategoriID == altKategori.ID).OrderBy(y => y.ID).ToList();
+                                            }
+
+                                            @foreach (var yemek in yemekler)
+                                            {
+                                                <li>
+                                                    <h4>
+                                                        <span class="menu-title">@yemek.YemekAd</span>
+                                                        <span class="menu-price">@yemek.Fiyat TL</span>
+                                                    </h4>
+                                                    <div class="menu-text">@yemek.Acıklama</div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+
+                                    @{
+                                        var anaKategoriYemekleri = Model.Tbl_Menu.Where(y => y.KategoriID == anaKategori.ID && !Model.Tbl_MenuKategori.Any(k => k.UstKategoriID == anaKategori.ID && k.ID == y.KategoriID)).OrderBy(y => y.ID).ToList();
+                                    }
+
+                                    @if (anaKategoriYemekleri.Any())
+                                    {
+                                        <ul class="food-menu menu-1cols mobile-margin-b54">
+                                            @foreach (var yemek in anaKategoriYemekleri)
+                                            {
+                                                <li>
+                                                    <h4>
+                                                        <span class="menu-title">@yemek.YemekAd</span>
+                                                        <span class="menu-price">@yemek.Fiyat TL</span>
+                                                    </h4>
+                                                    <div class="menu-text">@yemek.Acıklama</div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                                <div class="col-md-6 alignc">
+                                    <img src="@anaKategori.ResimURL" class="img-fluid" alt="@anaKategori.KategoriAd" style="height:700px; width:500px;" />
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- Resim sol, açıklama sağ -->
+                                <div class="col-md-6 alignc">
+                                    <img src="@anaKategori.ResimURL" class="img-fluid" alt="@anaKategori.KategoriAd" style="height:700px; width:500px;" />
+                                </div>
+                                <div class="col-md-6">
+                                    @* Açıklamalar *@
+                                    <div class="alignc">
+                                        <div class="smalltitle margin-b16">1</div>
+                                        <h2>@anaKategori.KategoriAd</h2>
+                                    </div>
+
+                                    @{
+                                        var altKategoriler = Model.Tbl_MenuKategori.Where(k => k.UstKategoriID == anaKategori.ID).OrderBy(k => k.ID).ToList();
+                                    }
+
+                                    @foreach (var altKategori in altKategoriler)
+                                    {
+                                        <h3 class="margin-t30">@altKategori.KategoriAd</h3>
+                                        <ul class="food-menu menu-1cols mobile-margin-b54">
+                                            @{
+                                                var yemekler = Model.Tbl_Menu.Where(y => y.KategoriID == altKategori.ID).OrderBy(y => y.ID).ToList();
+                                            }
+
+                                            @foreach (var yemek in yemekler)
+                                            {
+                                                <li>
+                                                    <h4>
+                                                        <span class="menu-title">@yemek.YemekAd</span>
+                                                        <span class="menu-price">@yemek.Fiyat TL</span>
+                                                    </h4>
+                                                    <div class="menu-text">@yemek.Acıklama</div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+
+                                    @{
+                                        var anaKategoriYemekleri = Model.Tbl_Menu.Where(y => y.KategoriID == anaKategori.ID && !Model.Tbl_MenuKategori.Any(k => k.UstKategoriID == anaKategori.ID && k.ID == y.KategoriID)).OrderBy(y => y.ID).ToList();
+                                    }
+
+                                    @if (anaKategoriYemekleri.Any())
+                                    {
+                                        <ul class="food-menu menu-1cols mobile-margin-b54">
+                                            @foreach (var yemek in anaKategoriYemekleri)
+                                            {
+                                                <li>
+                                                    <h4>
+                                                        <span class="menu-title">@yemek.YemekAd</span>
+                                                        <span class="menu-price">@yemek.Fiyat TL</span>
+                                                    </h4>
+                                                    <div class="menu-text">@yemek.Acıklama</div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                            }
+                        </div> <!-- /row -->
+
+                        index++; 
+                    }
                 </div>
-                <!-- /custom-page-template -->
             </div>
-            <!-- /col-md-12 -->
         </div>
-        <!-- /row -->
     </div>
-    <!-- /container -->
+
+
 </div>
+
+
 
