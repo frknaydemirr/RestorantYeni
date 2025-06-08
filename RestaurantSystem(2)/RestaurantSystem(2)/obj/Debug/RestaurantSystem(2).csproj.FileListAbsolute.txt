@@ -81,3 +81,4 @@ C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\RestaurantSystem(2)\Restau
 C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\RestaurantSystem(2)\RestaurantSystem(2)\bin\EntityFramework.xml
 C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\RestaurantSystem(2)\RestaurantSystem(2)\bin\EntityFramework.SqlServer.dll
 C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\RestaurantSystem(2)\RestaurantSystem(2)\bin\EntityFramework.SqlServer.xml
+C:\Users\Mekatronik\Desktop\Kurumsal İşitme Projesi\RestaurantSystem(2)\RestaurantSystem(2)\bin\QRCoder.dll

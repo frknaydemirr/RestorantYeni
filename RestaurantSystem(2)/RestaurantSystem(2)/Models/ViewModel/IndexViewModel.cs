@@ -11,6 +11,7 @@ namespace RestaurantSystem_2_.Models.ViewModel
         public List<Tbl_Menu> Tbl_Menu { get; set; }
 
         public List<Tbl_MenuKategori> Tbl_MenuKategori { get; set; }
+        public Tbl_MenuKategori Tbl_SeciliKategori { get; set; }
 
     }
 }

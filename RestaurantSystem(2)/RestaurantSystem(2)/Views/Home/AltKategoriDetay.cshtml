@@ -1,30 +1,23 @@
 ﻿@model RestaurantSystem_2_.Models.ViewModel.IndexViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "AltKategoriDetay";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <section class="topSingleBkg topPageBkg">
     <div class="item-img top-menu-1col"></div>
-    <div class="inner-desc">
-        <h1 class="post-title single-post-title">Menü</h1> 
+    <div class="inner-desc"> 
+        <h1 class="post-title single-post-title">@Model.Tbl_SeciliKategori.KategoriAd</h1> 
     </div>
 </section>
 <div class="container">
     <div class="mobile-menu-grid">
-        @foreach (var anaKategori in Model.Tbl_MenuKategori.Where(k => k.UstKategoriID == null).OrderBy(k => k.ID))
+        @foreach (var anaKategori in Model.Tbl_MenuKategori.OrderBy(k => k.ID))
         {
-            //// Basit slug oluşturma (boşlukları ve özel karakterleri temizle)
-            //var slug = anaKategori.KategoriAd.ToLower()
-            //    .Replace("ç", "c")
-            //    .Replace("ğ", "g")
-            //    .Replace("ı", "i")
-            //    .Replace("ö", "o")
-            //    .Replace("ş", "s")
-            //    .Replace("ü", "u")
-            //    .Replace(" ", "-");
 
-            <a href="/Menu/@anaKategori.ID" class="menu-card" style="background-image:url('@anaKategori.ResimURL')">
+
+            <a href="/Home/UrunListesi/@anaKategori.ID" class="menu-card" style="background-image:url('@anaKategori.ResimURL')">
                 <span class="menu-title">@anaKategori.KategoriAd</span>
             </a>
         }
@@ -87,6 +80,8 @@
         }
     }
 </style>
+
+
 
 
 

@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "QR Kod Oluştur";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+} 
+
+<h2>Domain QR Kodu</h2>
+
+<div>
+    <img id="qrImage" src="@Url.Action("GetImage", "QRCode")" alt="QR Kod" style="width:300px;height:300px;" />
+</div>
+
+<br />
+
+<a href="@Url.Action("Generate", "QRCode")" class="btn btn-primary" download>İndir</a>
+<button class="btn btn-secondary" onclick="printQR()">Yazdır</button>
+ 
+    <script>
+        function printQR() {
+            var imgSrc = document.getElementById("qrImage").src;
+            var wnd = window.open("");
+            wnd.document.write('<img src="' + imgSrc + '" style="width:300px;height:300px;" />');
+            wnd.document.close();
+            wnd.focus();
+            wnd.print();
+            wnd.close();
+        }
+    </script> 
+

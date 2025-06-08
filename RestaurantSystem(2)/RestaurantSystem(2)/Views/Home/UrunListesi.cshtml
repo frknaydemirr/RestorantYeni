@@ -1,0 +1,297 @@
+﻿@model RestaurantSystem_2_.Models.ViewModel.IndexViewModel
+@{
+    ViewBag.Title = "UrunListesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="topSingleBkg topPageBkg">
+    <div class="item-img top-menu-1col"></div>
+    <div class="inner-desc">
+        <h1 class="post-title single-post-title">@Model.Tbl_SeciliKategori.KategoriAd</h1>
+    </div>
+</section>
+<div class="container">
+    <div class="mobile-menu-grid">
+        @foreach (var anaKategori in Model.Tbl_Menu.OrderBy(k => k.YemekAd))
+        {
+            <a href="javascript:void(0)" class="menu-card" style="background-image:url('@anaKategori.ResimURL')"
+               onclick="showProductModal('@anaKategori.YemekAd', '@anaKategori.Fiyat', '@anaKategori.Acıklama', '@anaKategori.ResimURL')">
+                <div class="menu-card-content">
+                    <span class="menu-title">@anaKategori.YemekAd</span>
+                    <span class="menu-price">@anaKategori.Fiyat.ToString("C")</span>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+<!-- Product Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="modal-image-container">
+            <img id="modalImage" src="" alt="Ürün Resmi" class="modal-image">
+        </div>
+        <div class="modal-details">
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <p id="modalDescription" class="modal-description"></p>
+            <div class="modal-price-container">
+                <span class="modal-price" id="modalPrice"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Mobile Menu Grid */
+    .mobile-menu-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .menu-card {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        height: 150px;
+        display: flex;
+        align-items: flex-end;
+        text-decoration: none;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+        .menu-card:hover {
+            transform: scale(1.03);
+        }
+
+        .menu-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3));
+        }
+
+    .menu-card-content {
+        position: relative;
+        width: 100%;
+        padding: 15px;
+        color: #fff;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 5px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .menu-price {
+        font-weight: 600;
+        font-size: 16px;
+        color: #ffd700;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        align-self: flex-start;
+        background-color: rgba(0,0,0,0.5);
+        padding: 3px 10px;
+        border-radius: 12px;
+    }
+
+    /* Modal Styling - Güncellenmiş Kısım */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+        overflow-y: auto;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: modalFadeIn 0.3s ease-out;
+        position: relative;
+        margin: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .close-modal {
+        color: #aaa;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
+        z-index: 2;
+    }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+    .modal-image-container {
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .modal-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .modal-details {
+        padding: 0 10px;
+    }
+
+    .modal-title {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 24px;
+    }
+
+    .modal-description {
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .modal-price-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    .modal-price {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    /* Responsive Adjustments */
+    @@media(min-width: 576px) {
+        .mobile-menu-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media(min-width: 768px) {
+        .mobile-menu-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .menu-card {
+            height: 180px;
+        }
+
+        .menu-title {
+            font-size: 20px;
+        }
+
+        .menu-price {
+            font-size: 18px;
+        }
+        /* Modal adjustments for desktop */
+        .modal-content {
+            display: flex;
+            max-width: 800px;
+            padding: 30px;
+        }
+
+        .modal-image-container {
+            flex: 1;
+            height: 350px;
+            margin-right: 20px;
+            margin-bottom: 0;
+        }
+
+        .modal-details {
+            flex: 1;
+            padding: 0;
+        }
+    }
+
+    @@media(max-width: 480px) {
+        .modal-image-container {
+            height: 200px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+        }
+
+        .modal-price {
+            font-size: 16px;
+        }
+
+        .modal-content {
+            margin: 10px;
+            max-height: 85vh;
+        }
+    }
+
+    @@keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    function showProductModal(title, price, description, imageUrl) {
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalPrice').textContent = price + ' ₺';
+        document.getElementById('modalDescription').textContent = description || 'Açıklama bulunmamaktadır.';
+        document.getElementById('modalImage').src = imageUrl;
+
+        document.getElementById('productModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function (event) {
+        const modal = document.getElementById('productModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
